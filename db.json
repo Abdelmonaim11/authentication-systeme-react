@@ -1,0 +1,58 @@
+{
+  "users": [
+    {
+      "username": "Monaim",
+      "name": "Monaim Ahoud",
+      "password": "john@example.com",
+      "id": "1b58"
+    },
+    {
+      "username": "Monaim",
+      "name": "Amine Ghazoui",
+      "password": "jane@example.com",
+      "id": "e7e5"
+    },
+    {
+      "id": "2dd3",
+      "name": "Mouad Kaaib",
+      "username": "Mouad1",
+      "password": "121212"
+    },
+    {
+      "id": "90f6",
+      "name": "Lotfi Ahdoud",
+      "username": "lotfi12",
+      "password": "00000"
+    },
+    {
+      "id": "f0e3",
+      "name": "Oussama Casa",
+      "username": "ousama3",
+      "password": "9999"
+    },
+    {
+      "id": "6845",
+      "name": "Achraf Elallaoui",
+      "username": "achraf11",
+      "password": "767423"
+    },
+    {
+      "id": "c068",
+      "name": "Zakaria Bimo",
+      "username": "zakaria11",
+      "password": "333333"
+    },
+    {
+      "id": "2baa",
+      "username": "anass111",
+      "name": "Anass Boukil",
+      "password": "767676"
+    },
+    {
+      "id": "0d02",
+      "username": "ayoub23",
+      "name": "Ayoub Aamir",
+      "password": "53535345"
+    }
+  ]
+}

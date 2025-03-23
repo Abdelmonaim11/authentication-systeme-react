@@ -1,5 +1,6 @@
 import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
+import axios from "axios";
 import {
   TextField,
   Button,
@@ -23,19 +24,45 @@ const SignIn = () => {
     name: "",
     password: "",
   });
+  const [error, setError] = useState("");
 
   const handleChange = (e) => {
-    const { name, value } = e.target;
-    setFormData((prevState) => ({
-      ...prevState,
-      [name]: value,
-    }));
+    setFormData({
+      ...formData,
+      [e.target.name]: e.target.value,
+    });
   };
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
     console.log("Form submitted:", formData);
-    // Add your authentication logic here
+
+    if (!formData.username || !formData.name || !formData.password) {
+      setError("All fields are required!");
+      return;
+    }
+
+    try {
+      const checkUser = await axios.get(
+        `http://localhost:5000/users?username=${formData.username}`
+      );
+
+      if (checkUser.data.length > 0) {
+        setError("Username already taken!");
+        return;
+      }
+
+      const response = await axios.post(
+        "http://localhost:5000/users",
+        formData
+      );
+      console.log("User created:", response.data);
+
+      navigate("/dashboard");
+    } catch (error) {
+      console.error("Error signing up:", error);
+      setError("Something went wrong!");
+    }
   };
 
   const navigateToSignIn = (e) => {
@@ -43,6 +70,10 @@ const SignIn = () => {
     navigate("/signin");
   };
 
+  const navigateToDashboard = (e) => {
+    e.preventDefault();
+    navigate("/dashboard");
+  };
   return (
     <div className="container mt-5">
       <div className="row justify-content-center">
@@ -126,7 +157,7 @@ const SignIn = () => {
                   fullWidth
                   className="mb-3"
                 >
-                  Sign In
+                  Sign Up
                 </Button>
 
                 <Typography className="text-center mt-2">

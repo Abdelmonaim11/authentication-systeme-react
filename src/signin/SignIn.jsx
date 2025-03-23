@@ -1,5 +1,7 @@
 import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
+import axios from "axios";
+import { useAuth } from "./../context/AuthContext";
 import {
   TextField,
   Button,
@@ -17,11 +19,12 @@ import {
 
 const SignIn = () => {
   const navigate = useNavigate();
+  const { login } = useAuth();
   const [formData, setFormData] = useState({
     username: "",
     password: "",
   });
-
+  const [error, setError] = useState("");
   const handleChange = (e) => {
     const { name, value } = e.target;
     setFormData((prevState) => ({
@@ -30,15 +33,35 @@ const SignIn = () => {
     }));
   };
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
     console.log("Form submitted:", formData);
     // Add your authentication logic here
+    try {
+      const response = await fetch(
+        `http://localhost:5000/users?username=${formData.username}&password=${formData.password}`
+      );
+      const data = await response.json();
+      console.log(data);
+      login(data[0]);
+      if (data.length > 0) {
+        navigateToDashboard(e);
+      } else {
+        setError("Invalid username or password");
+      }
+    } catch (err) {
+      console.error("Error:", err);
+      setError("Something went wrong!");
+    }
   };
 
   const navigateToSignUp = (e) => {
     e.preventDefault();
     navigate("/signup");
+  };
+  const navigateToDashboard = (e) => {
+    e.preventDefault();
+    navigate("/dashboard");
   };
 
   return (
@@ -60,6 +83,7 @@ const SignIn = () => {
                   margin: "auto",
                 }}
               />
+              {error && <p style={{ color: "red" }}>{error}</p>}
             </div>
 
             <form onSubmit={handleSubmit}>
